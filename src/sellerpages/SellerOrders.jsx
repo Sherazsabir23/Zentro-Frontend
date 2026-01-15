@@ -33,13 +33,16 @@ const SellerOrders = () => {
   // ---------------------
   const updateItemStatus = async (orderId, productId, status) => {
     try {
-      const res = await orderApi.updateOrderItemStatus(orderId, { productId, status });
+      const res = await orderApi.updateOrderItemStatus(orderId, {
+        productId,
+        status,
+      });
       if (res && res.success) {
-        const updatedOrders = orders.map(order => {
+        const updatedOrders = orders.map((order) => {
           if (order._id !== orderId) return order;
           return {
             ...order,
-            items: order.items.map(item =>
+            items: order.items.map((item) =>
               item.product._id === productId
                 ? { ...item, sellerStatus: status }
                 : item
@@ -58,18 +61,23 @@ const SellerOrders = () => {
   // ---------------------
   // Filtered Orders Logic
   // ---------------------
-  const filteredOrders = orders.filter(order =>
+  const filteredOrders = orders.filter((order) =>
     statusFilter === "All"
       ? true
-      : order.items.some(item => {
+      : order.items.some((item) => {
           // Seller side filters (pending, processing, ready for shipped)
-          if (["Pending", "Processing", "ReadyForShipped"].includes(statusFilter)) {
+          if (
+            ["Pending", "Processing", "ReadyForShipped"].includes(statusFilter)
+          ) {
             return item.sellerStatus === statusFilter && order.status === null;
           }
 
           // Admin shipped filter
           if (statusFilter === "Shipped") {
-            return item.sellerStatus === "ReadyForShipped" && order.status === "Shipped";
+            return (
+              item.sellerStatus === "ReadyForShipped" &&
+              order.status === "Shipped"
+            );
           }
 
           // Admin delivered filter
@@ -119,7 +127,7 @@ const SellerOrders = () => {
         <select
           className="border p-2 rounded"
           value={statusFilter}
-          onChange={e => setStatusFilter(e.target.value)}
+          onChange={(e) => setStatusFilter(e.target.value)}
         >
           <option>All</option>
           <option>Pending</option>
@@ -131,8 +139,11 @@ const SellerOrders = () => {
       </div>
 
       <div className="space-y-6">
-        {filteredOrders.map(order => (
-          <div key={order._id} className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
+        {filteredOrders.map((order) => (
+          <div
+            key={order._id}
+            className="bg-white shadow-md rounded-lg p-6 border border-gray-200"
+          >
             {/* Order Header */}
             <div className="mb-4">
               <h2 className="text-xl font-semibold text-gray-800">
@@ -144,37 +155,61 @@ const SellerOrders = () => {
               </p>
               <p className="text-gray-600">
                 Address: {order.address.fullName}, {order.address.phone},{" "}
-                {order.address.street}, {order.address.city}, {order.address.country} - {order.address.postalCode}
+                {order.address.street}, {order.address.city},{" "}
+                {order.address.country} - {order.address.postalCode}
               </p>
               <p className="text-gray-600">
-                Payment: <span className="font-medium text-green-600">{order.paymentStatus}</span>
+                Payment:{" "}
+                <span className="font-medium text-green-600">
+                  {order.paymentStatus}
+                </span>
               </p>
             </div>
 
             {/* Items */}
             <div className="border-t pt-3">
               <h3 className="text-lg font-semibold mb-2">Items</h3>
-              {order.items.map(item => (
-                <div key={item.product._id} className="flex items-center gap-3 border-b py-3">
+              {order.items.map((item) => (
+                <div
+                  key={item.product._id}
+                  className="flex items-center gap-3 border-b py-3"
+                >
                   <img
-                    src={`${import.meta.env.VITE_IMAGE_URL}${item.product.productimages?.[0] || "placeholder.jpg"}`}
+                    src={`${import.meta.env.VITE_IMAGE_URL}${
+                      item.product.productimages?.[0] || "placeholder.jpg"
+                    }`}
                     alt={item.product.name}
                     className="w-16 h-16 object-cover rounded border"
                   />
                   <div className="flex-1">
-                    <p className="font-medium text-gray-800">{item.product.name}</p>
-                    <p className="text-gray-500 text-sm">Qty: {item.quantity}</p>
+                    <p className="font-medium text-gray-800">
+                      {item.product.name}
+                    </p>
+                    <p className="text-gray-500 text-sm">
+                      Qty: {item.quantity}
+                    </p>
                     <p className="text-gray-600 text-sm">
-                      Status: <span className="text-blue-600">{getDisplayStatus(item, order)}</span>
+                      Status:{" "}
+                      <span className="text-blue-600">
+                        {getDisplayStatus(item, order)}
+                      </span>
                     </p>
                   </div>
-                  <p className="text-orange-500 font-semibold text-lg">Rs {item.price}</p>
+                  <p className="text-orange-500 font-semibold text-lg">
+                    Rs {item.price}
+                  </p>
 
                   {/* Action Buttons per Item */}
                   <div className="flex flex-col gap-1">
                     {item.sellerStatus === "Pending" && (
                       <button
-                        onClick={() => updateItemStatus(order._id, item.product._id, "Processing")}
+                        onClick={() =>
+                          updateItemStatus(
+                            order._id,
+                            item.product._id,
+                            "Processing"
+                          )
+                        }
                         className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
                       >
                         Mark as Processing
@@ -182,7 +217,13 @@ const SellerOrders = () => {
                     )}
                     {item.sellerStatus === "Processing" && (
                       <button
-                        onClick={() => updateItemStatus(order._id, item.product._id, "ReadyForShipped")}
+                        onClick={() =>
+                          updateItemStatus(
+                            order._id,
+                            item.product._id,
+                            "ReadyForShipped"
+                          )
+                        }
                         className="px-3 py-1 bg-purple-500 text-white rounded hover:bg-purple-600 text-sm"
                       >
                         Mark as Ready For Shipped
@@ -196,7 +237,10 @@ const SellerOrders = () => {
             {/* Seller Total */}
             <div className="mt-4">
               <p className="font-semibold text-gray-800">
-                Total Amount: <span className="text-orange-500">Rs {order.items.reduce((sum, item) => sum + item.price, 0)}</span>
+                Total Amount:{" "}
+                <span className="text-orange-500">
+                  Rs {order.items.reduce((sum, item) => sum + item.price, 0)}
+                </span>
               </p>
             </div>
           </div>

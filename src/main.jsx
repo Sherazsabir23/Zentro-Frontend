@@ -36,6 +36,7 @@ import AdminOrders from "./adminPages/AdminOrders";
 import SellerPayments from "./adminPages/SellerPayments";
 import ProductApproval from "./adminPages/Product";
 import AdminPaymentHistory from "./adminPages/AdminPaymentHistory";
+import AdminSliderUpload from "./adminPages/AdminSliderUpload";
 
 // Seller Pages
 import SellerDashboard from "./sellerpages/SellerDashboard";
@@ -80,6 +81,7 @@ const router = createBrowserRouter(
         <Route path="payments" element={<SellerPayments />} />
         <Route path="sellerproducts" element={<ProductApproval />} />
         <Route path="sellerpaymenthistory" element={<AdminPaymentHistory />} />
+        <Route path="sliders" element={<AdminSliderUpload />} />
       </Route>
 
       {/* ===== SELLER ROUTES ===== */}
