@@ -8,7 +8,7 @@ const Sidebar = ({ type }) => {
   return (
     <div className="z-10 ">
       <button
-        className="text-black font-semibold text-3xl md:hidden fixed top-40 left-5 z-50"
+        className="text-black font-semibold text-3xl md:hidden fixed top-32 left-2 z-50"
         onClick={() => setIsOpen(!isOpen)}
       >
         ☰

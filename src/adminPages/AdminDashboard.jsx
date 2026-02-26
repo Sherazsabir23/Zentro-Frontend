@@ -38,7 +38,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold text-orange-500 mb-8">Admin Dashboard Overview</h1>
+      <h1 className="text-3xl sm:text-left text-center  font-bold text-orange-500 mb-8">Admin Dashboard Overview</h1>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">

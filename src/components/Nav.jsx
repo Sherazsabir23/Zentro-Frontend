@@ -57,7 +57,7 @@ function Nav() {
         )}
       </ul>
       <ul className="flex items-center  gap-4 justify-evenly w-full md:p-0 pt-5 p-3">
-        <li className=" text-white font-semibold hidden md:block  text-3xl">
+        <li className=" text-white font-semibold md:text-3xl  text-2xl">
           <span className="px-1">§</span>Zentro
         </li>
         <li className="md:flex-[0.6] flex-1 ">

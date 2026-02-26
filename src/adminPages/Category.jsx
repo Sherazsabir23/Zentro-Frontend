@@ -56,7 +56,7 @@ const Category = () => {
   };
 
   return (
-    <div className="w-full min-h-screen flex items-start justify-center py-10 bg-gray-50">
+    <div className="w-full min-h-screen flex items-start justify-center p-10 bg-gray-50">
       <div className="bg-white shadow-2xl p-8 rounded-2xl w-[700px]">
         <h2 className="text-3xl font-bold mb-6 text-center text-orange-500">
           Manage Categories
