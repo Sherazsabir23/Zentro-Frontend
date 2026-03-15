@@ -1,11 +1,10 @@
-import React, { useState ,useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import sellerauth from "../api/sellerauth";
-import adminauth from '../api/adminauth';
+import adminauth from "../api/adminauth";
 import toast from "react-hot-toast";
-import {useSelector} from 'react-redux';
-
-
+import { useSelector } from "react-redux";
+import auth from "../api/auth"
 
 const SellerForm = () => {
   const [step, setStep] = useState(1);
@@ -14,7 +13,7 @@ const SellerForm = () => {
   const [shopName, setShopName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [admincategories, setadmincategories]=useState([]);
+  const [admincategories, setadmincategories] = useState([]);
   const [contact, setContact] = useState("");
 
   // Payment fields
@@ -35,14 +34,28 @@ const SellerForm = () => {
     setStep(2);
   };
 
+    //refresh user 
+
+  const refreshUser = async () => {
+  try {
+    const response = await auth.me();
+
+    if (response && response.user) {
+      dispatch(login(response.user)); // Redux update
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-      if (!user) {
-    toast.error("You must be logged in to submit!");
-    navigate("/login"); // Redirect to login page
-    return;
-  }
+    if (!user) {
+      toast.error("You must be logged in to submit!");
+      navigate("/login"); // Redirect to login page
+      return;
+    }
     if (!method || !accountHolder || !accountNumber || !cnic) {
       toast.error("Please fill payment info!");
       return;
@@ -69,6 +82,8 @@ const SellerForm = () => {
 
       if (response && response.success) {
         toast.success("Seller request sent!");
+
+        await refreshUser(); // Refresh user data
         navigate("/");
       } else {
         toast.error(response.message);
@@ -82,23 +97,24 @@ const SellerForm = () => {
   };
 
 
+
   const getCategories = async () => {
-      try {
-        const response = await adminauth.allCategories();
-        if (response && response.success) {
-          setadmincategories(response.categories);
-        } else {
-          toast.error("Something went wrong");
-        }
-      } catch (err) {
-        console.log("error of backend is:", err);
-        toast.error("Internal Server Error in allCatgories");
+    try {
+      const response = await adminauth.allCategories();
+      if (response && response.success) {
+        setadmincategories(response.categories);
+      } else {
+        toast.error("Something went wrong");
       }
-    };
-  
-    useEffect(() => {
-      getCategories();
-    }, []);
+    } catch (err) {
+      console.log("error of backend is:", err);
+      toast.error("Internal Server Error in allCatgories");
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
   return (
     <div className="w-full sm:px-16 px-5 md:px-5 flex justify-center items-center flex-col py-10 ">
       <form
@@ -111,8 +127,12 @@ const SellerForm = () => {
 
         {/* Step Indicators */}
         <div className="flex justify-center gap-4 pb-4">
-          <div className={`w-3 h-3 rounded-full ${step === 1 ? "bg-orange-600" : "bg-gray-300"}`}></div>
-          <div className={`w-3 h-3 rounded-full ${step === 2 ? "bg-orange-600" : "bg-gray-300"}`}></div>
+          <div
+            className={`w-3 h-3 rounded-full ${step === 1 ? "bg-orange-600" : "bg-gray-300"}`}
+          ></div>
+          <div
+            className={`w-3 h-3 rounded-full ${step === 2 ? "bg-orange-600" : "bg-gray-300"}`}
+          ></div>
         </div>
 
         {/* STEP 1: SHOP DETAILS */}
@@ -133,20 +153,20 @@ const SellerForm = () => {
               className="w-full bg-gray-100 py-3 px-4 rounded-lg outline-none resize-none"
             />
 
-         <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full p-2 mb-3 border rounded-md outline-none"
-              >
-                <option value="">Select Category</option>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full p-2 mb-3 border rounded-md outline-none"
+            >
+              <option value="">Select Category</option>
 
-                {admincategories.map((cat) => (
-                  <option key={cat._id} value={cat.name}>
-                    {cat.name}
-                  </option>
-                ))}
-              </select>
-          
+              {admincategories.map((cat) => (
+                <option key={cat._id} value={cat.name}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+
             <input
               type="email"
               placeholder="Contact Email"
@@ -234,7 +254,6 @@ const SellerForm = () => {
       </form>
 
       {/* Small CSS Animation */}
-      
     </div>
   );
 };

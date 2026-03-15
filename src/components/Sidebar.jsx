@@ -68,6 +68,14 @@ const Sidebar = ({ type }) => {
               >
                 Seller Requests
               </Link>
+
+                <Link
+                to="/admin/sliders"
+                onClick={() => setIsOpen(false)}
+                className="hover:text-yellow-300"
+              >
+                Home Slider
+              </Link>
             </nav>
           </>
         ) : (

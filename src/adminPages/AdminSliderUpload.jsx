@@ -61,10 +61,13 @@ const AdminSliderUpload = () => {
     if (!window.confirm("Are you sure you want to delete this slider?")) return;
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/sliders/${id}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/sliders/${id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        },
+      );
 
       if (res.ok) {
         toast.success("Slider deleted successfully");
@@ -79,8 +82,8 @@ const AdminSliderUpload = () => {
 
   return (
     <div className="max-w-5xl mx-auto mt-10 p-4 md:p-8 bg-gray-50 min-h-screen">
-      <Toaster position="top-right" />
-      
+      <Toaster position="top-center" />
+
       {/* --- Header --- */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800">Slider Management</h1>
@@ -88,7 +91,6 @@ const AdminSliderUpload = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
         {/* --- Left Column: Upload Form --- */}
         <div className="lg:col-span-1">
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
@@ -133,17 +135,20 @@ const AdminSliderUpload = () => {
             <h2 className="text-xl font-semibold mb-4">Existing Sliders</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {sliders.map((slider) => (
-                <div key={slider._id} className="group relative bg-gray-100 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
-                  <img 
-                    src={`${import.meta.env.VITE_IMAGE_URL}${slider.image}`} 
-                    alt="Slider" 
+                <div
+                  key={slider._id}
+                  className="group relative bg-gray-100 rounded-lg overflow-hidden border border-gray-200 shadow-sm"
+                >
+                  <img
+                    src={`${import.meta.env.VITE_IMAGE_URL}${slider.image}`}
+                    alt="Slider"
                     className="w-full h-32 object-cover group-hover:scale-105 transition duration-300"
                   />
                   <div className="p-3 flex justify-between items-center bg-white">
                     <span className="text-xs font-medium text-gray-500 truncate max-w-[120px]">
                       {slider.link}
                     </span>
-                    <button 
+                    <button
                       onClick={() => handleDelete(slider._id)}
                       className="p-2 text-red-500 hover:bg-red-50 rounded-full transition"
                       title="Delete Slider"
