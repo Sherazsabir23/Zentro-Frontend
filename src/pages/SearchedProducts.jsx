@@ -11,7 +11,7 @@ const SearchedProducts = () => {
   const location = useLocation();
   const query = new URLSearchParams(location.search).get("query");
   const category = new URLSearchParams(location.search).get("category");
- console.log(products.productimages?.[0])
+ 
 useEffect(() => {
   const fetchProducts = async () => {
     setloading(true);

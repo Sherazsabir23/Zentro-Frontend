@@ -46,6 +46,7 @@ import SellerEarnings from "./sellerpages/SellerEarnings";
 import Setting from "./sellerpages/SellerSettings";
 import SellerTerms from "./sellerpages/SellerTerms";
 import { Toaster } from "react-hot-toast";
+import SellerPage from "./components/SellerPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -69,6 +70,7 @@ const router = createBrowserRouter(
         <Route path="shippingpolicy" element={<ShippingPolicy />} />
         <Route path="faq" element={<FAQ />} />
         <Route path="terms" element={<SellerTerms />} />
+        <Route path="/seller/:id" element={<SellerPage />} />
 
       </Route>
       {/* ===== ADMIN ROUTES ===== */}

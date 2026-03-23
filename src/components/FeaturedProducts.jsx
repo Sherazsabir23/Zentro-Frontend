@@ -29,7 +29,7 @@ const FeaturedProducts = () => {
   }, []);
 
   if (loading) {
-    return <p className="text-center py-10">Loading...</p>;
+    return <div className="w-full p-10  flex items-center justify-center"><div className="w-12 h-12 border-4 border-gray-300  border-t-black rounded-full animate-spin"></div></div>
   }
 
   return (

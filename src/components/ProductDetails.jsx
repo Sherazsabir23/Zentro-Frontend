@@ -114,7 +114,7 @@ const ProductDetails = () => {
     }
   };
 
-  if (loading) return <p className="p-5">Loading...</p>;
+  if (loading) return <div className="w-full min-h-screen  flex items-center justify-center"><div className="w-12 h-12 border-4 border-gray-300  border-t-black rounded-full animate-spin"></div></div>;
   if (!product) return <p className="p-5">Product not found</p>;
 
   const discountedPrice =
@@ -124,9 +124,9 @@ const ProductDetails = () => {
   return (
     <>
       {/* Existing Product Section */}{" "}
-      <section className="flex flex-col w-full min-h-screen md:flex-row gap-6 p-7 md:p-20  bg-gray-100 border-b-2">
+      <section className="flex flex-col w-full min-h-screen md:flex-row gap-6 p-7 md:p-20 bg-gray-100 border-b-2">
         {/* Left - Image Slider */}{" "}
-        <div className="md:w-1/2">
+        <div className="md:w-1/2 ">
           {" "}
           <div className="rounded-md bg-gray-500 ">
             <img
@@ -154,6 +154,15 @@ const ProductDetails = () => {
           <h1 className="text-3xl font-montserrat font-semibold capitalize">
             {product.productname}
           </h1>
+     <p
+  onClick={() => navigate(`/seller/${product?.seller?._id}`)}
+  className="text-sm text-gray-600 cursor-pointer hover:text-blue-600 transition"
+>
+  Sold by:{" "}
+  <span className="font-semibold">
+    {product?.seller?.shopName}
+  </span>
+</p>
 
           {/* ⭐ Average Rating Display */}
           <div className="flex items-center gap-2">
@@ -200,7 +209,13 @@ const ProductDetails = () => {
               Buy Now
             </button>
             <button
-              onClick={() => handleAddToCart(product._id)}
+              onClick={() => {
+                if (!user) {
+                  navigate("/login"); 
+                } else {
+                  handleAddToCart(product._id); 
+                }
+              }}
               className="bg-gray-200 text-black px-6 py-2 rounded-lg hover:bg-gray-300 transition"
             >
               Add to Cart
@@ -216,7 +231,7 @@ const ProductDetails = () => {
             relatedProducts.map((item) => {
               const discountedPrice = Math.round(
                 item.productprice -
-                  (item.productprice * item.productdiscount) / 100
+                  (item.productprice * item.productdiscount) / 100,
               );
 
               return (
