@@ -232,7 +232,10 @@ const checkSellerRole = async () => {
     },
   );
   const data = await response.json();
-  return data;
+  return{
+    ...data,
+    status:response.status,
+  } 
 };
 
 // api/sellerApi.js

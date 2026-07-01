@@ -40,7 +40,7 @@ return () => clearInterval(interval);
              const response = await auth.verifyOtp({email,otp});
         if(response && response.success){
             toast.success("Email verification done");
-            navigate("/");
+            navigate("/login");
         }else{
             console.log("error:",response.message);
          toast.error("Something Went Wrong in verify otp check console")   ;

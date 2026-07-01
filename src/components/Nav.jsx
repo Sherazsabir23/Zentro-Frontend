@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector} from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import { FaShoppingCart } from "react-icons/fa";
@@ -7,6 +7,7 @@ function Nav() {
   const [searchInput, setSearchInput] = useState("");
   const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
+
 
   const handleSearch = (e) => {
     if (e.key === "Enter") {
