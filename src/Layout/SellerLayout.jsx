@@ -27,7 +27,7 @@ useEffect(() => {
       // Token valid hai lekin seller nahi hai
       if (res.status === 403) {
         toast.error(res.message);
-        navigate("/");
+        navigate("/login");
         return;
       }
 

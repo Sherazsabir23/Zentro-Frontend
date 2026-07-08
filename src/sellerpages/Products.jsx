@@ -298,6 +298,15 @@ const Products = () => {
                       >
                         Delete
                       </button>
+                       {item.isApproved? (
+    <span className="bg-green-500 text-white px-2 py-1 text-xs rounded">
+      Approved
+    </span>
+  ) : (
+    <span className="bg-yellow-500 text-white px-2 py-1 text-xs rounded">
+      Pending
+    </span>
+  )}
                     </div>
 
                     
