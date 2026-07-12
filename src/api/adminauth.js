@@ -1,3 +1,5 @@
+import axios from "axios"
+
 const allsellerRequests = async () => {
   const response = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/allsellerRequests`,
@@ -192,6 +194,16 @@ const rejectProduct = async (productId) => {
 };
 
 
+const checkAdminRole = async () => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_BACKEND_URL}/checkadminrole`,
+    {
+      withCredentials: true,
+    }
+  );
+
+  return response.data;
+};
 
 export default {
   allsellerRequests,
@@ -210,5 +222,6 @@ export default {
   unApprovedProducts,
   approveProduct,
   rejectProduct,
+  checkAdminRole
   
 };

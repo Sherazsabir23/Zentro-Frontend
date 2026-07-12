@@ -60,7 +60,7 @@ const AdminDashboard = () => {
         </div>
         <div className="bg-white shadow-md rounded-lg p-6 text-center border-t-4 border-orange-500">
           <div className="text-gray-500 text-sm font-medium">Total Earnings</div>
-          <div className="text-2xl font-bold text-gray-800">{stats.totalEarnings.toFixed(2)}</div>
+          <div className="text-2xl font-bold text-gray-800">{(stats.totalEarnings || 0).toFixed(2)}</div>
         </div>
       </div>
 
