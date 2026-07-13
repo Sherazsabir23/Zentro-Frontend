@@ -15,7 +15,7 @@ import MainLayout from "./Layout/MainLayout";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import VerifyOtp from "./pages/Verifyotp";
+import VerifyOtp from "./pages/VerifyOtp";
 import SellerForm from "./pages/SellerForm";
 import MyAccount from "./pages/MyAccount";
 import SearchedProducts from "./pages/SearchedProducts";
