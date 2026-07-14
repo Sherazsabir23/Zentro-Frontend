@@ -17,6 +17,7 @@ const AdminLayout = () => {
 
         if (res.success) {
           setIsAdmin(true);
+          navigate("/admin")
         } else {
           toast.error(res.message || "Access Denied");
           navigate("/", { replace: true });
