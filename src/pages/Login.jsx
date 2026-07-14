@@ -14,25 +14,31 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await auth.loginApi(userEmail, userPassword);
-      if (response && response.success) {
-        toast.success("user login successfully");
-        dispatch(login(response.user));
+  e.preventDefault();
+  setLoading(true);
+  try {
+    const response = await auth.loginApi(userEmail, userPassword);
+    if (response && response.success) {
+      toast.success("user login successfully");
+      dispatch(login(response.user));
+
+      // 👇 role-based redirect
+      if (response.user.role === "admin") {
+        navigate("/admin");
+      } else {
         navigate("/");
-      } else if(response.unverified) {
-          navigate(`/verification/email?email=${userEmail}`);
-        }else{
-          toast.error("backend message:" + response.message);
       }
-    } catch (err) {
-      toast.error("Error is :" + err);
-    } finally {
-      setLoading(false);
+    } else if (response.unverified) {
+      navigate(`/verification/email?email=${userEmail}`);
+    } else {
+      toast.error("backend message:" + response.message);
     }
-  };
+  } catch (err) {
+    toast.error("Error is :" + err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="w-full h-auto flex justify-center items-center px-5 bg-gray-50 ">
