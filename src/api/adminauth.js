@@ -80,7 +80,12 @@ const allCategories = async () => {
 
 const getSellerPayments = async () => {
   try {
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/seller-payments`);
+    const res = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/seller-payments`,
+      {
+        credentials: "include",
+      }
+    );
     if (!res.ok) throw new Error("Failed to fetch seller payments");
     const data = await res.json();
     return data;
@@ -92,12 +97,16 @@ const getSellerPayments = async () => {
 
 const markSellerPaymentAsPaid = async (sellerId) => {
   try {
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/seller-payments/${sellerId}/mark-paid`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/seller-payments/${sellerId}/mark-paid`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
     if (!res.ok) throw new Error("Failed to mark payment as paid");
     const data = await res.json();
     return data;
@@ -107,43 +116,57 @@ const markSellerPaymentAsPaid = async (sellerId) => {
   }
 };
 
-
- const fetchDashboardStats = async () => {
-  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/dashboard-stats`);
+const fetchDashboardStats = async () => {
+  const res = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/dashboard-stats`,
+    {
+      credentials: "include",
+    }
+  );
   return res.json();
 };
 
 const fetchLatestOrders = async () => {
-  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/latest-orders`);
+  const res = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/latest-orders`,
+    {
+      credentials: "include",
+    }
+  );
   return res.json();
 };
 
 const fetchLatestUsers = async () => {
-  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/latest-users`);
+  const res = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/latest-users`,
+    {
+      credentials: "include",
+    }
+  );
   return res.json();
 };
-
-
 
 export const fetchAllUsers = async () => {
-  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users`);
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users`, {
+    credentials: "include",
+  });
   return res.json();
 };
-
 
 export const deleteUserById = async (id) => {
   const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/${id}`, {
     method: "DELETE",
+    credentials: "include",
   });
   return res.json();
 };
 
 export const getUserDetailsById = async (id) => {
-  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/${id}`);
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/${id}`, {
+    credentials: "include",
+  });
   return res.json();
 };
-
-
 
 export const unApprovedProducts = async () => {
   const response = await fetch(
@@ -161,7 +184,6 @@ export const unApprovedProducts = async () => {
   return data;
 };
 
-
 export const approveProduct = async (productId) => {
   const response = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/admin/products/approve/${productId}`,
@@ -178,7 +200,6 @@ export const approveProduct = async (productId) => {
   return data;
 };
 
-
 const rejectProduct = async (productId) => {
   const response = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/admin/products/reject/${productId}`,
@@ -192,7 +213,6 @@ const rejectProduct = async (productId) => {
   const data = await response.json();
   return data;
 };
-
 
 const checkAdminRole = async () => {
   const response = await axios.get(
@@ -222,6 +242,5 @@ export default {
   unApprovedProducts,
   approveProduct,
   rejectProduct,
-  checkAdminRole
-  
+  checkAdminRole,
 };
