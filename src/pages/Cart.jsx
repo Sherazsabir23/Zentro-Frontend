@@ -249,9 +249,7 @@ const Cart = () => {
                 className="border p-2 rounded"
               >
                 <option value="COD">Cash on Delivery</option>
-                <option value="JazzCash">JazzCash</option>
-                <option value="EasyPaisa">EasyPaisa</option>
-                <option value="CARD">Credit/Debit Card</option>
+               
               </select>
             </div>
 
