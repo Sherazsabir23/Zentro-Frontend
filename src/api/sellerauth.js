@@ -79,34 +79,15 @@ const handleReject = async (id) => {
   return data;
 };
 
-const handleproductform = async ({
-  productname,
-  productprice,
-  productstock,
-  productdiscount,
-  productdescription,
-  productcategory,
-  productimage,
-}) => {
+const handleproductform = async (formData) => {
   try {
-    const formData = new FormData();
-    formData.append("productname", productname);
-    formData.append("productprice", productprice);
-    formData.append("productstock", productstock);
-    formData.append("productdiscount", productdiscount);
-    formData.append("productdescription", productdescription);
-    formData.append("productcategory", productcategory);
-
-    for (let i = 0; i < productimage.length; i++) {
-      formData.append("productimage", productimage[i]);
-    }
-
     const response = await fetch(
       `${import.meta.env.VITE_BACKEND_URL}/handleproductform`,
       {
         method: "POST",
         credentials: "include",
-        body: formData,
+        // Browser automatic multipart/form-data boundary set kar dega
+        body: formData, 
       },
     );
 
@@ -117,6 +98,7 @@ const handleproductform = async ({
     throw error;
   }
 };
+
 
 const featuredProducts = async () => {
   const response = await fetch(
